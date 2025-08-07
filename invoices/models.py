@@ -14,6 +14,11 @@ class Invoice(TimeStampedModel):
     description = models.TextField(null=True, blank=True)
     total = models.PositiveBigIntegerField(default=0)
 
+    def recalculate_total(self):
+        total = sum(item.price * item.count for item in self.invoiceitems.all())  # type: ignore
+        self.total = total
+        self.save(update_fields=["total"])
+
 
 class InvoiceItem(models.Model):
     description = models.TextField(null=True, blank=True)
@@ -28,31 +33,9 @@ class InvoiceItem(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        existing_item = (
-            self.invoice.invoiceitems.filter(product=self.product)
-            .exclude(pk=self.pk)
-            .first()
-        )
-        if existing_item:
-            existing_item.count += self.count
-            existing_item.save(update_fields=["count"])
-
-            # Update total
-            item_total = self.count * self.price
-            self.invoice.total += item_total
-            self.invoice.save(update_fields=["total"])
-            return
-
-        is_new = self.pk is None
         super().save(*args, **kwargs)
+        self.invoice.recalculate_total()
 
-        if is_new:
-            item_total = self.count * self.price
-            self.invoice.total += item_total
-            self.invoice.save(update_fields=["total"])
-
-    def delete(self, *args, **kwargs):
-        print(self)
-        self.invoice.total -= self.count * self.price
-        self.invoice.save(update_fields=["total"])
-        return super().delete(*args, **kwargs)
+    def delete(self, *args, **kwargs):  # type: ignore
+        super().delete(*args, **kwargs)
+        self.invoice.recalculate_total()
