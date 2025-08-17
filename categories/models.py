@@ -8,7 +8,7 @@ class Category(models.Model):
     description = models.TextField(null=True, blank=True)
     image_url = models.TextField(null=True, blank=True)
     first_page = models.BooleanField(default=False)
-    order = models.PositiveBigIntegerField(default=random.randint(1, 100))
+    order = models.CharField(max_length=3)
     parent = models.ForeignKey(
         "self",
         on_delete=models.PROTECT,

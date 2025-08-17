@@ -1,5 +1,6 @@
 start-postgres:
-	docker run --name postgres --network caroption --detach --rm -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret	-e PGDATA=/var/lib/postgresql/data/pgdata -v "./database":/var/lib/postgresql/data postgres:17.5
+	docker run --name postgres --network caroption --detach --rm -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret	-e PGDATA=/var/lib/postgresql/data/pgdata -v "$(pwd)/database:/var/lib/postgresql/data" postgres:17.5
+
 
 stop-postgres:
 	docker stop postgres
