@@ -1,9 +1,9 @@
-import random
-
 from django.db import models
 
+from core.models import TimeStampedModel
 
-class Category(models.Model):
+
+class Category(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
     image_url = models.TextField(null=True, blank=True)
@@ -17,7 +17,7 @@ class Category(models.Model):
         blank=True,
     )
 
-    class Meta:
+    class Meta:  # type: ignore[reportIncompatibleVariableOverride]
         verbose_name_plural = "categories"
 
     def __str__(self):
