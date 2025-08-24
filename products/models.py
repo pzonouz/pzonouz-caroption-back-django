@@ -10,9 +10,7 @@ class Product(TimeStampedModel):
     image_url = models.TextField(null=True, blank=True)
     price = models.IntegerField()
     count = models.IntegerField()
-    category = models.ForeignKey(
-        "categories.Category", on_delete=models.PROTECT, null=True
-    )
+    category = models.ForeignKey("categories.Category", on_delete=models.PROTECT)
     advantages = models.ManyToManyField(
         "advantages.Advantage",
         related_name="products",
