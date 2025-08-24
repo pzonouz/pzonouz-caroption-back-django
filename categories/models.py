@@ -7,7 +7,7 @@ class Category(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(null=True, blank=True)
     image_url = models.TextField(null=True, blank=True)
-    first_page = models.BooleanField(default=False)
+    first_page = models.BooleanField(default=True)
     order = models.CharField(max_length=3)
     parent = models.ForeignKey(
         "self",
