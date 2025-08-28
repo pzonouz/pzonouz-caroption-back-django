@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     "core",
     "djoser",
     "corsheaders",
+    "entities",
 ]
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",

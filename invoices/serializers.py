@@ -1,9 +1,11 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from invoices.models import Invoice, InvoiceItem
 
 
 class InvoiceItemSerializer(ModelSerializer):
+    id = serializers.CharField(source="pk", read_only=True)
     productname = SerializerMethodField()
 
     def get_productname(self, obj):

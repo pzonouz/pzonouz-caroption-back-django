@@ -5,15 +5,19 @@ from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from authentication.views import signup
+from brands.views import BrandsViewset
 from categories.views import CategoryViewSet, ParentCategoryList, products_in_category
+from entities.views import EntityViewSet, ParentEntityList
 from invoices.views import InvoiceItemViewset, InvoiceViewset
 from persons.views import PersonsViewset
-from products.views import ProductsViewset
+from products.views import ProductsViewset, generate_products
 
 router = SimpleRouter()
 router.register("categories", CategoryViewSet, basename="Category")
 router.register("products", ProductsViewset, basename="Product")
 router.register("persons", PersonsViewset, basename="Person")
+router.register("brands", BrandsViewset, basename="Brand")
+router.register("entities", EntityViewSet, basename="entity")
 router.register("invoices", InvoiceViewset, basename="Invoice")
 router.register("invoiceitems", InvoiceItemViewset, basename="InvoiceItem")
 urlpatterns = [
@@ -22,7 +26,9 @@ urlpatterns = [
     path("", include("core.urls")),
     path("products_in_category/<int:pk>", products_in_category),
     path("parent_categories", ParentCategoryList.as_view()),
+    path("parent_entities", ParentEntityList.as_view()),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.jwt")),
     path("auth/signup", signup),
+    path("generate_products", generate_products),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
