@@ -10,7 +10,7 @@ from categories.views import CategoryViewSet, ParentCategoryList, products_in_ca
 from entities.views import EntityViewSet, ParentEntityList
 from invoices.views import InvoiceItemViewset, InvoiceViewset
 from persons.views import PersonsViewset
-from products.views import ProductsViewset, generate_products
+from products.views import ProductsViewset, generate_products, update_generated_products
 
 router = SimpleRouter()
 router.register("categories", CategoryViewSet, basename="Category")
@@ -31,4 +31,5 @@ urlpatterns = [
     path("auth/", include("djoser.urls.jwt")),
     path("auth/signup", signup),
     path("generate_products", generate_products),
+    path("update_generated_products", update_generated_products),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

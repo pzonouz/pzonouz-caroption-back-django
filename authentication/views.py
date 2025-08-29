@@ -14,7 +14,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token["is_admin"] = user.is_staff
-        print(vars(token))
         return token
 
 
@@ -33,10 +32,8 @@ def signin(request):
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def signup(request):
-    print(request.POST)
     email = request.POST.get("email")
     username = request.POST.get("username")
-    print(username)
     password = request.POST.get("password")
     user_model = get_user_model()
     existing_user = user_model.objects.filter(username__iexact=username).first()

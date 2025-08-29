@@ -5,6 +5,7 @@ from core.models import TimeStampedModel
 
 class Entity(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
+    english_name = models.CharField(max_length=255, unique=False, null=True)
     description = models.TextField(null=True, blank=True)
     image_url = models.TextField(null=True, blank=True)
     order = models.CharField(max_length=3)
