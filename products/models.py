@@ -23,7 +23,9 @@ class Product(TimeStampedModel):
     )
     entity = models.ForeignKey(Entity, null=True, blank=True, on_delete=models.SET_NULL)
     count = models.IntegerField(default=0)
-    category = models.ForeignKey("categories.Category", on_delete=models.PROTECT)
+    category = models.ForeignKey(
+        "categories.Category", on_delete=models.PROTECT, null=True
+    )
     advantages = models.ManyToManyField(
         "advantages.Advantage",
         related_name="products",
