@@ -10,7 +10,12 @@ from categories.views import CategoryViewSet, ParentCategoryList, products_in_ca
 from entities.views import EntityViewSet, ParentEntityList
 from invoices.views import InvoiceItemViewset, InvoiceViewset
 from persons.views import PersonsViewset
-from products.views import ProductsViewset, generate_products, update_generated_products
+from products.views import (
+    ProductsViewset,
+    delete_from_image_urls,
+    generate_products,
+    update_generated_products,
+)
 
 router = SimpleRouter()
 router.register("categories", CategoryViewSet, basename="Category")
@@ -32,4 +37,8 @@ urlpatterns = [
     path("auth/signup", signup),
     path("generate_products", generate_products),
     path("update_generated_products", update_generated_products),
+    path(
+        "delete_from_image_urls/<str:product_id>",
+        delete_from_image_urls,
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

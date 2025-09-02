@@ -25,6 +25,7 @@ class ProductSerializer(ModelSerializer):
             "price3",
             "main_product",
             "image_url",
+            "image_urls",
             "count",
             "advantages",
             "disadvantages",

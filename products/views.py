@@ -26,3 +26,13 @@ def generate_products(request):
 def update_generated_products(request):
     update_all_derived_products()
     return Response({"status": "ok"})
+
+
+@api_view(["POST"])
+def delete_from_image_urls(request, product_id):
+    product = Product.objects.get(id=product_id)
+    print(product)
+    image_name = request.data.get("image_name")
+    product.image_urls.remove(image_name)  # remove by value
+    product.save()
+    return Response(status=200)
