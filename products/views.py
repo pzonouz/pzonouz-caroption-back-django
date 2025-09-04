@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view
-from rest_framework.views import Response
+from rest_framework.views import Response, status
 from rest_framework.viewsets import ModelViewSet
 
 from core.permissions import IsAdminUserOrReadOnly
@@ -30,9 +30,18 @@ def update_generated_products(request):
 
 @api_view(["POST"])
 def delete_from_image_urls(request, product_id):
-    product = Product.objects.get(id=product_id)
-    print(product)
+    try:
+        product = Product.objects.get(id=product_id)
+    except Exception as e:
+        return Response(
+            {"error": "Product not found"}, status=status.HTTP_400_BAD_REQUEST
+        )
     image_name = request.data.get("image_name")
+    if image_name not in product.image_urls:
+        return Response(
+            {"error": f"Image '{image_name}' not found in product image URLs."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
     product.image_urls.remove(image_name)  # remove by value
     product.save()
     return Response(status=200)

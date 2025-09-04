@@ -38,7 +38,7 @@ urlpatterns = [
     path("generate_products", generate_products),
     path("update_generated_products", update_generated_products),
     path(
-        "delete_from_image_urls/<str:product_id>",
+        "delete_from_image_urls/<int:product_id>",
         delete_from_image_urls,
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
