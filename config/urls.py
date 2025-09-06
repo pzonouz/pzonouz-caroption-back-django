@@ -9,6 +9,11 @@ from brands.views import BrandsViewset
 from categories.views import CategoryViewSet, ParentCategoryList, products_in_category
 from entities.views import EntityViewSet, ParentEntityList
 from invoices.views import InvoiceItemViewset, InvoiceViewset
+from parameters.views import (
+    ParameterGroupViewSet,
+    ParameterViewSet,
+    ProductParameterValueViewSet,
+)
 from persons.views import PersonsViewset
 from products.views import (
     ProductsViewset,
@@ -25,6 +30,13 @@ router.register("brands", BrandsViewset, basename="Brand")
 router.register("entities", EntityViewSet, basename="entity")
 router.register("invoices", InvoiceViewset, basename="Invoice")
 router.register("invoiceitems", InvoiceItemViewset, basename="InvoiceItem")
+router.register("parameters", ParameterViewSet, basename="parameter")
+router.register("parameter-groups", ParameterGroupViewSet, basename="parameter_group")
+router.register(
+    "product-parameter-values",
+    ProductParameterValueViewSet,
+    basename="product-parameter-value",
+)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(router.urls)),
