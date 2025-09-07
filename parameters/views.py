@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
 from core.permissions import IsAdminUserOrReadOnly
@@ -14,6 +15,8 @@ class ParameterViewSet(ModelViewSet):
     permission_classes = [IsAdminUserOrReadOnly]
     queryset = Parameter.objects.all()
     serializer_class = ParametersSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["parameter_group"]
 
 
 class ParameterGroupViewSet(ModelViewSet):

@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
-from rest_framework.serializers import ModelSerializer, StringRelatedField
+from rest_framework.serializers import ModelSerializer
 
 from brands.models import Brand
 from categories.models import Category
+from categories.serializers import CategorySerializer
 from products.models import Product
 
 
@@ -12,6 +13,7 @@ class ProductSerializer(ModelSerializer):
     brand = PrimaryKeyRelatedField(queryset=Brand.objects.all())
     category = PrimaryKeyRelatedField(queryset=Category.objects.all())
     main_product = serializers.SerializerMethodField()
+    category_full = CategorySerializer(source="category", read_only=True)
 
     class Meta:
         model = Product
@@ -33,6 +35,7 @@ class ProductSerializer(ModelSerializer):
             "generated",
             "generatable",
             "category",
+            "category_full",
         ]
 
     def get_main_product(self, obj):
