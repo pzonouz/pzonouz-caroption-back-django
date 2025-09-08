@@ -13,6 +13,7 @@ from parameters.views import (
     ParameterGroupViewSet,
     ParameterViewSet,
     ProductParameterValueViewSet,
+    getProductParameterValuesByProduct,
 )
 from persons.views import PersonsViewset
 from products.views import (
@@ -52,5 +53,8 @@ urlpatterns = [
     path(
         "delete_from_image_urls/<int:product_id>",
         delete_from_image_urls,
+    ),
+    path(
+        "product-parameter-values/product/<int:id>", getProductParameterValuesByProduct
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

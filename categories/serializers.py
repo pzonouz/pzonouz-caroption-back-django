@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
     parent = serializers.CharField(source="parent_id", allow_null=True, required=False)
     children = SerializerMethodField()
     parent_name = SerializerMethodField()
-    parameter_groups = ParameterGroupsSerializer(many=True)
+    parameter_groups = ParameterGroupsSerializer(many=True, required=False)
 
     class Meta:
         model = Category
@@ -34,6 +34,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_parent_name(self, obj):
         return obj.parent.name if obj.parent else None
+
+    def create(self, validated_data):
+        # pop out nested data
+        validated_data.pop("parameter_groups", [])
+
+        # create the Category instance
+        category = Category.objects.create(**validated_data)
+
+        return category
 
     # from ChatGPT
     def update(self, instance, validated_data):
