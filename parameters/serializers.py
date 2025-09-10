@@ -67,6 +67,26 @@ class ProductParameterValueSerializer(ModelSerializer):
 
         return super().create(validated_data)
 
+    def update(self, instance, validated_data):
+        # pop nested data
+        parameter_values_data = validated_data.pop("parameter_values", None)
+
+        # update product fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        # handle parameter_values if provided
+        if parameter_values_data is not None:
+            for pv_data in parameter_values_data:
+                pv_serializer = ProductParameterValueSerializer(
+                    data=pv_data, context=self.context
+                )
+                pv_serializer.is_valid(raise_exception=True)
+                pv_serializer.save(product=instance)
+
+        return instance
+
     class Meta:
         model = ProductParameterValue
         fields = [
