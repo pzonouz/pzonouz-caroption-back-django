@@ -17,6 +17,7 @@ class Product(TimeStampedModel):
         default=list,
     )
     image_url = models.TextField(null=True, blank=True)
+    images = models.ManyToManyField("images.Image", related_name="products")
     price = models.IntegerField(default=0, null=True)
     price2 = models.IntegerField(default=0, null=True)
     price3 = models.IntegerField(default=0, null=True)

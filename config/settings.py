@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "entities",
     "parameters",
     "django_filters",
+    "images",
 ]
 
 

@@ -8,6 +8,7 @@ from authentication.views import signup
 from brands.views import BrandsViewset
 from categories.views import CategoryViewSet, ParentCategoryList, products_in_category
 from entities.views import EntityViewSet, ParentEntityList
+from images.views import ImageViewset
 from invoices.views import InvoiceItemViewset, InvoiceViewset
 from parameters.views import (
     ParameterGroupViewSet,
@@ -33,6 +34,7 @@ router.register("invoices", InvoiceViewset, basename="Invoice")
 router.register("invoiceitems", InvoiceItemViewset, basename="InvoiceItem")
 router.register("parameters", ParameterViewSet, basename="parameter")
 router.register("parameter-groups", ParameterGroupViewSet, basename="parameter_group")
+router.register("images", ImageViewset, basename="image")
 router.register(
     "product-parameter-values",
     ProductParameterValueViewSet,
