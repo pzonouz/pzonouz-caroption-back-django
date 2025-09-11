@@ -47,6 +47,18 @@ class ProductSerializer(ModelSerializer):
             "parameter_values",
         ]
 
+    def create(self, validated_data):
+        parameter_values_data = validated_data.pop("parameter_values", [])
+        product = super().create(validated_data)
+
+        for pv_data in parameter_values_data:
+            ProductParameterValue.objects.update_or_create(
+                product=product,
+                parameter=pv_data["parameter"],
+                defaults=pv_data,
+            )
+        return product
+
     def update(self, instance, validated_data):
         # Pop nested values from data
         parameter_values_data = validated_data.pop("parameter_values", [])

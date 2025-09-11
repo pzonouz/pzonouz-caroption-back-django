@@ -42,7 +42,7 @@ class ParameterGroupsSerializer(ModelSerializer):
 class ProductParameterValueSerializer(ModelSerializer):
     id = serializers.CharField(source="pk", read_only=True)
     parameter = StringPKRelatedField(queryset=Parameter.objects.all())
-    product = StringPKRelatedField(queryset=Product.objects.all())
+    product = StringPKRelatedField(queryset=Product.objects.all(), required=False)
 
     def create(self, validated_data):
         product = validated_data["product"]
